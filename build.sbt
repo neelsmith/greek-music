@@ -1,4 +1,4 @@
-name := "Virgapes utilities"
+name := "Ancient Greek music library"
 
 crossScalaVersions in ThisBuild := Seq("2.11.8", "2.12.4")
 scalaVersion := (crossScalaVersions in ThisBuild).value.last
