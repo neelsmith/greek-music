@@ -2,13 +2,14 @@ package edu.holycross.shot.greekmusic
 import edu.holycross.shot.cite._
 import edu.holycross.shot.ohco2._
 import edu.holycross.shot.mid.validator._
+import scala.scalajs.js
+import scala.scalajs.js.annotation._
 
 /** An orthographic system for neumes encoded in the
 * Virgapes encoding, registered to a specific text or set
 * of texts identified by CtsUrn.
 */
-object GreekMusic extends MidOrthography {
-
+@JSExportTopLevel("GreekMusic")  object GreekMusic extends MidOrthography {
 
   /** Name of orthographic system implementing MidOrthogaphy.*/
   def orthography = "Greek musical notation"
