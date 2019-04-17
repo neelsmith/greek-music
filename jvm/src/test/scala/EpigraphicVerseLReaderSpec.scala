@@ -11,5 +11,16 @@ import org.scalatest.FlatSpec
 class EpigraphicVerseLReaderSpec extends FlatSpec {
 
 
-  "The EpigrphicVerseLReader object" should "read things" in pending
+  "The EpigraphicVerseLReader object" should "recognize an empty gap element" in {
+    val s = "<w><gap/>απε<gap/></w>"
+    val expected = "[…]απε[…]"
+    assert(EpigraphicVerseLReader.diplomatic(s) == expected)
+  }
+
+  it should "recognize numbers of missing whole monosemes" in {
+    val s = "<gap extent=\"2\" type=\"monoseme\" /> "
+    val expected = "[2 monosemes]"
+    assert(EpigraphicVerseLReader.diplomatic(s) == expected)
+  }
+
 }

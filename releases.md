@@ -1,5 +1,6 @@
 # `greekmusic`: release notes
 
+**2.1.0**:  Add `EpigraphicVerseLReader` class and object implementing `MidMarkupReader` trait  (JVM environment only).
 
 **2.0.0**: API-breaking change: constructor for `Note` now returns `Option[Note]` instead of `Note`.
 

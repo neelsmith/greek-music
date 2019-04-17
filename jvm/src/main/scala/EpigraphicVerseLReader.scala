@@ -1,11 +1,12 @@
-package edu.holycross.shot.mid.validator
+package edu.holycross.shot.greekmusic
+import edu.holycross.shot.mid.validator._
 import edu.holycross.shot.cite._
 import edu.holycross.shot.ohco2._
 import scala.xml._
 
 /** Reads texts using `l` element for poetic line
 *  as terminal citation unit.
-* It implements three uses of TEI `gap` with special meaning for musical notation:
+* It implements three uses of TEI `gap` with special meaning for metrical texts:
 *
 * 1.  <gap/> Lacuna that cannot be mapped to metrical units.
 * 2. <gap extent="N" type="monoseme" /> N complete metrical units are missing.
@@ -124,14 +125,38 @@ object EpigraphicVerseLReader {
   }
 
 
+  def gapValue(el: Node) :  String = {
+    val ellipsis = "[…]"
+    val gapType = (el \ "@type").text
+    val gapExtent = (el \ "@extent").text
+    //println("PROCESS GAP with type and extend " + gapType + " and " + gapExtent)
+    if (gapType.isEmpty) {
+      ellipsis
 
+    } else {
+      //println("NON EMPTy GAPTYE #" + gapType + "#")
+      if ((gapType == "monoseme") && (gapExtent.nonEmpty)) {
+        if (gapExtent == "1") {
+          s"[${gapExtent} monoseme]"
+        } else {
+          s"[${gapExtent} monosemes]"
+        }
+      } else {
+        ellipsis
+      }
+
+    }
+  }
   /** Determine what text to extract from a single XML element.
-  *  Depending on the semantics of this element in MID
+  *  Depending on the semantics of this element in our
   * dipomatic markup, we return either the text content of the
   * element, or, if no text content should be extracted,
   * a single space to isolate this markup from any preceding
   * or following content, or if the element is a container
   * that should continue to be recursively analyzed, None.
+  *
+  * TEI <gap/> has special meaning here depending on presence of attributes
+  * relating the lacuna to the metrical structure of the line.
   *
   * @param el Parsed XML element.
   */
@@ -160,7 +185,23 @@ object EpigraphicVerseLReader {
       // Unicode 0x374 :
       case "num" =>  Some(el.text  + "ʹ")
       // Recursively read all text content wrapped in `w`
-      case "w" => Some(collectText(el))
+      case "w" => {
+        val composite = for (c <- el.child) yield {
+          if (c.label == "gap") {
+            gapValue(c)
+          } else {
+            collectText(c)
+          }
+        }
+        Some(composite.mkString.replaceAll(" ",""))
+
+      }
+
+      // Special semantics of lacuna:
+      case "gap" => {
+        Some(gapValue(el))
+
+      }
 
 
       // Continue hierarchically descending reading
