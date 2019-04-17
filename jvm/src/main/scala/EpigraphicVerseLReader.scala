@@ -127,7 +127,7 @@ object EpigraphicVerseLReader {
 
   def gapValue(el: Node) :  String = {
     val ellipsis = "[…]"
-    val gapType = (el \ "@type").text
+    val gapType = (el \ "@unit").text
     val gapExtent = (el \ "@extent").text
     //println("PROCESS GAP with type and extend " + gapType + " and " + gapExtent)
     if (gapType.isEmpty) {

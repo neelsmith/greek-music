@@ -7,7 +7,7 @@
 
 
 
-## Current version: 2.1.0
+## Current version: 2.1.1
 
 Status: active development. Release notes
 

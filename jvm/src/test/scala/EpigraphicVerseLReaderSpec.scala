@@ -18,7 +18,7 @@ class EpigraphicVerseLReaderSpec extends FlatSpec {
   }
 
   it should "recognize numbers of missing whole monosemes" in {
-    val s = "<gap extent=\"2\" type=\"monoseme\" /> "
+    val s = "<gap extent=\"2\" unit=\"monoseme\" /> "
     val expected = "[2 monosemes]"
     assert(EpigraphicVerseLReader.diplomatic(s) == expected)
   }
