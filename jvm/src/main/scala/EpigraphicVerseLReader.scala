@@ -193,13 +193,14 @@ object EpigraphicVerseLReader {
             collectText(c)
           }
         }
-        Some(composite.mkString.replaceAll(" ",""))
+        // kludge to format internal gap...
+        Some(composite.mkString.replaceAll(" ","").replaceAll("monoseme", " monoseme"))
 
       }
 
       // Special semantics of lacuna:
       case "gap" => {
-        Some(gapValue(el))
+        Some(" " + gapValue(el) + " ")
 
       }
 

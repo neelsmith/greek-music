@@ -1,5 +1,8 @@
 # `greekmusic`: release notes
 
+**2.1.3**: More niceties in formatting `gap`.
+
+**2.1.2**: String formatting fix when `gap` embedded within `w`.
 
 **2.1.1**:  Correct attribute name in `gap` encoding.
 
